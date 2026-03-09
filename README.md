@@ -9,13 +9,17 @@ This project implements a 32-bit Direct Mapped Cache Controller using Verilog HD
 The implemented cache is a Direct Mapped Cache consisting of 16 cache lines. Each cache line stores:
 
 1. A data word (32 bits)
+   
 2. A tag value (24 bits)
+   
 3. A valid bit (1 bit)
 
 The 32-bit address from the CPU is divided into three fields:
 
 a. Tag (bits 31–8): Used to identify the memory block.
+
 b. Index (bits 7–4): Selects the cache line.
+
 c. Offset (bits 3–0): Selects the byte within a block (not heavily used in this simplified design).
 
 **Modules in the Design**
@@ -36,10 +40,15 @@ c. Offset (bits 3–0): Selects the byte within a block (not heavily used in thi
 During simulation, the testbench sends a sequence of memory addresses such as:
 
 0x10
+
 0x10
+
 0x20
+
 0x10
+
 0x30
+
 0x30
 
 The first time a new address is accessed, the cache will produce a cache miss because the cache is initially empty. The data is then fetched from the main memory and stored in the cache. When the same address is requested again, the controller detects that the tag matches and the valid bit is set, resulting in a cache hit.
@@ -49,16 +58,23 @@ The first time a new address is accessed, the cache will produce a cache miss be
 In the waveform viewer, the following signals can be observed:
 
 *clk* – System clock driving the cache operations.
+
 *reset* – Initializes the system.
+
 *read* – Indicates a read request from the CPU.
+
 *address* – Memory address requested by the CPU.
+
 *hit* – Indicates whether the access was a cache hit or miss.
+
 *data_out* – Data returned to the CPU.
 
 The waveform should show the following pattern:
 
 *First access to an address results in hit = 0 (cache miss).*
+
 *The same address accessed again results in hit = 1 (cache hit).*
+
 *The returned data matches the values stored in the main memory initialization.*
 
 The X shown in the waveform is normal since in the start values of cache_data, tag_mem and valid_mem are not initialized. That is why it shows a X in the data waveform since it is undefined. 
